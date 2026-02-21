@@ -308,6 +308,47 @@ function Library:NewWindow(title)
             }
         end
         
+
+        function Section:CreateLabel(labelText)
+    local LabelFrame = Instance.new("Frame")
+    LabelFrame.Name = "LabelFrame"
+    LabelFrame.Size = UDim2.new(1, 0, 0, 30)
+    LabelFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+    LabelFrame.BorderSizePixel = 0
+    LabelFrame.Parent = ContentContainer
+    
+    local LabelCorner = Instance.new("UICorner")
+    LabelCorner.CornerRadius = UDim.new(0, 6)
+    LabelCorner.Parent = LabelFrame
+    
+    local Label = Instance.new("TextLabel")
+    Label.Name = "Label"
+    Label.Size = UDim2.new(1, -20, 1, 0)
+    Label.Position = UDim2.new(0, 10, 0, 0)
+    Label.BackgroundTransparency = 1
+    Label.Text = labelText
+    Label.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Label.TextSize = 13
+    Label.Font = Enum.Font.Gotham
+    Label.TextXAlignment = Enum.TextXAlignment.Left
+    Label.TextWrapped = true
+    Label.Parent = LabelFrame
+    
+    return {
+        Set = function(self, newText)
+            Label.Text = newText
+            
+            Tween(LabelFrame, {BackgroundColor3 = Color3.fromRGB(60, 140, 220)}, 0.15)
+            wait(0.15)
+            Tween(LabelFrame, {BackgroundColor3 = Color3.fromRGB(45, 45, 50)}, 0.3)
+        end,
+        
+        SetColor = function(self, color)
+            Tween(Label, {TextColor3 = color}, 0.2)
+        end
+    }
+end
+
         function Section:CreateKeybind(keybindText, defaultKey, callback)
             local currentKey = defaultKey or Enum.KeyCode.E
             local binding = false
