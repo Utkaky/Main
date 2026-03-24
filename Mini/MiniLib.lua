@@ -253,7 +253,7 @@ function Library:NewWindow(title)
         SectionLabel.TextSize = 11
         SectionLabel.Font = Enum.Font.GothamBold
         SectionLabel.TextXAlignment = Enum.TextXAlignment.Left
-        SectionLabel.LetterSpacing = 2
+
         SectionLabel.Parent = SectionHeader
 
         -- ── BUTTON ───────────────────────────────────────────────
