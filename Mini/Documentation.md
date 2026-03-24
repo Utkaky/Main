@@ -25,4 +25,4 @@ ReplicateSignalUI provides a sleek, modern interface for creating menus in Roblo
 To use the library, simply require the script:
 
 ```lua
-local Library = require(script.Parent) -- or wherever the module is located
+local Library = loadstring(game:HttpGet(""))()
