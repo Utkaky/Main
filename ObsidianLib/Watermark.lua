@@ -1,0 +1,277 @@
+WatermarkEnabled = true
+WatermarkText = "Ninja"
+WatermarkIcon = "rbxassetid://11322089611"
+
+Colors = {
+    Background = Color3.fromRGB(18, 18, 22),
+    BackgroundGradient1 = Color3.fromRGB(22, 22, 28),
+    BackgroundGradient2 = Color3.fromRGB(18, 18, 22),
+    Outline = Color3.fromRGB(60, 60, 70),
+    Accent = Color3.fromRGB(88, 101, 242),
+    Text = Color3.fromRGB(255, 255, 255),
+    TextSecondary = Color3.fromRGB(160, 160, 170),
+    FPSGood = Color3.fromRGB(100, 255, 150),
+    FPSMid = Color3.fromRGB(255, 220, 100),
+    FPSBad = Color3.fromRGB(255, 100, 100),
+    PingGood = Color3.fromRGB(100, 255, 150),
+    PingMid = Color3.fromRGB(255, 220, 100),
+    PingBad = Color3.fromRGB(255, 100, 100)
+}
+
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local Stats = game:GetService("Stats")
+local TweenService = game:GetService("TweenService")
+local Player = game:GetService("Players").LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "TKSWatermark"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.DisplayOrder = 999
+
+if RunService:IsStudio() then 
+    ScreenGui.Parent = Player:WaitForChild("PlayerGui") 
+else 
+    pcall(function() 
+        ScreenGui.Parent = CoreGui 
+    end) 
+end
+
+local Frame = Instance.new("Frame")
+Frame.Name = "WatermarkFrame"
+Frame.Size = UDim2.new(0, 250, 0, 32)
+Frame.Position = UDim2.new(0.01, 0, 0.01, -50)
+Frame.BackgroundColor3 = Colors.Background
+Frame.BorderSizePixel = 0
+Frame.ClipsDescendants = false
+Frame.Active = true
+Frame.Parent = ScreenGui
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 8)
+Corner.Parent = Frame
+
+local Gradient = Instance.new("UIGradient")
+Gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Colors.BackgroundGradient1),
+    ColorSequenceKeypoint.new(1, Colors.BackgroundGradient2)
+}
+Gradient.Rotation = 135
+Gradient.Parent = Frame
+
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.Size = UDim2.new(1, 30, 1, 30)
+Shadow.Position = UDim2.new(0, -15, 0, -15)
+Shadow.BackgroundTransparency = 1
+Shadow.Image = "rbxassetid://5554236805"
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.5
+Shadow.ScaleType = Enum.ScaleType.Slice
+Shadow.SliceCenter = Rect.new(23, 23, 277, 277)
+Shadow.ZIndex = -1
+Shadow.Parent = Frame
+
+local Stroke = Instance.new("UIStroke")
+Stroke.Thickness = 1.5
+Stroke.Color = Colors.Outline
+Stroke.Transparency = 0.3
+Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+Stroke.Parent = Frame
+
+local Icon = Instance.new("ImageLabel")
+Icon.Name = "Icon"
+Icon.Size = UDim2.new(0, 20, 0, 20)
+Icon.Position = UDim2.new(0, 10, 0.5, -10)
+Icon.BackgroundTransparency = 1
+Icon.Image = WatermarkIcon
+Icon.ImageColor3 = Colors.Accent
+Icon.ScaleType = Enum.ScaleType.Fit
+Icon.Parent = Frame
+
+local IconCorner = Instance.new("UICorner")
+IconCorner.CornerRadius = UDim.new(0, 4)
+IconCorner.Parent = Icon
+
+local Text = Instance.new("TextLabel")
+Text.Name = "InfoText"
+Text.Size = UDim2.new(1, -45, 1, -6)
+Text.Position = UDim2.new(0, 35, 0, 3)
+Text.BackgroundTransparency = 1
+Text.Font = Enum.Font.GothamBold
+Text.TextSize = 13
+Text.TextXAlignment = Enum.TextXAlignment.Left
+Text.TextYAlignment = Enum.TextYAlignment.Center
+Text.TextColor3 = Colors.Text
+Text.Text = WatermarkText
+Text.TextStrokeTransparency = 0.7
+Text.RichText = true
+Text.Parent = Frame
+
+local Dragging = false
+local DragInput = nil
+local DragStart = nil
+local StartPosition = nil
+
+local function UpdateDrag(input)
+    local Delta = input.Position - DragStart
+    Frame.Position = UDim2.new(
+        StartPosition.X.Scale,
+        StartPosition.X.Offset + Delta.X,
+        StartPosition.Y.Scale,
+        StartPosition.Y.Offset + Delta.Y
+    )
+end
+
+Frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        Dragging = true
+        DragStart = input.Position
+        StartPosition = Frame.Position
+        
+        TweenService:Create(Frame, TweenInfo.new(0.2), {BackgroundTransparency = 0.1}):Play()
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                Dragging = false
+                TweenService:Create(Frame, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
+            end
+        end)
+    end
+end)
+
+Frame.MouseEnter:Connect(function()
+    if not Dragging then
+        TweenService:Create(Stroke, TweenInfo.new(0.2), {Transparency = 0}):Play()
+    end
+end)
+
+Frame.MouseLeave:Connect(function()
+    if not Dragging then
+        TweenService:Create(Stroke, TweenInfo.new(0.2), {Transparency = 0.3}):Play()
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        DragInput = input
+    end
+end)
+
+RunService.Heartbeat:Connect(function()
+    if Dragging and DragInput then
+        UpdateDrag(DragInput)
+    end
+end)
+
+local fpsCounter = 0
+local lastTick = tick()
+
+RunService.RenderStepped:Connect(function()
+    fpsCounter = fpsCounter + 1
+end)
+
+local function GetFPSColor(fps)
+    if fps >= 60 then
+        return Colors.FPSGood
+    elseif fps >= 30 then
+        return Colors.FPSMid
+    else
+        return Colors.FPSBad
+    end
+end
+
+local function GetPingColor(ping)
+    if ping <= 50 then
+        return Colors.PingGood
+    elseif ping <= 100 then
+        return Colors.PingMid
+    else
+        return Colors.PingBad
+    end
+end
+
+local function RGBToString(color)
+    return string.format("rgb(%d,%d,%d)", 
+        math.floor(color.R * 255),
+        math.floor(color.G * 255),
+        math.floor(color.B * 255)
+    )
+end
+
+task.spawn(function()
+    local dataPing = Stats.Network.ServerStatsItem["Data Ping"]
+    
+    while task.wait(1) do
+        if not WatermarkEnabled then
+            ScreenGui.Enabled = false
+            fpsCounter = 0
+            lastTick = tick()
+            continue
+        end
+        
+        ScreenGui.Enabled = true
+        
+        local currentTick = tick()
+        local timeDiff = currentTick - lastTick
+        local FPS = math.floor(fpsCounter / timeDiff)
+        fpsCounter = 0
+        lastTick = currentTick
+        
+        local PingVal = dataPing:GetValueString()
+        local Ping = tonumber(PingVal:match("%d+")) or 0
+        
+        local Time = os.date("%H:%M:%S")
+        
+        local fpsColor = GetFPSColor(FPS)
+        local pingColor = GetPingColor(Ping)
+        
+        local watermarkFormat = string.format(
+            '<b>%s</b> <font color="%s">│</font> <font color="%s">%d</font> <font size="11">FPS</font> <font color="%s">│</font> <font color="%s">%d</font> <font size="11">MS</font> <font color="%s">│</font> <font color="%s" size="11">%s</font>',
+            WatermarkText,
+            RGBToString(Colors.TextSecondary),
+            RGBToString(fpsColor), FPS,
+            RGBToString(Colors.TextSecondary),
+            RGBToString(pingColor), Ping,
+            RGBToString(Colors.TextSecondary),
+            RGBToString(Colors.TextSecondary), Time
+        )
+        
+        Text.Text = watermarkFormat
+        
+        local textService = game:GetService("TextService")
+        local textSize = textService:GetTextSize(
+            Text.ContentText,
+            Text.TextSize,
+            Text.Font,
+            Vector2.new(math.huge, Text.AbsoluteSize.Y)
+        )
+        
+        local newSize = UDim2.new(0, textSize.X + 50, 0, 32)
+        TweenService:Create(Frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Size = newSize}):Play()
+    end
+end)
+
+Frame:TweenPosition(
+    UDim2.new(0.01, 0, 0.01, 0),
+    Enum.EasingDirection.Out,
+    Enum.EasingStyle.Back,
+    0.6,
+    true
+)
+
+task.spawn(function()
+    Shadow.ImageTransparency = 1
+    Stroke.Transparency = 1
+    Text.TextTransparency = 1
+    Icon.ImageTransparency = 1
+    
+    task.wait(0.3)
+    
+    TweenService:Create(Shadow, TweenInfo.new(0.5), {ImageTransparency = 0.5}):Play()
+    TweenService:Create(Stroke, TweenInfo.new(0.5), {Transparency = 0.3}):Play()
+    TweenService:Create(Text, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
+    TweenService:Create(Icon, TweenInfo.new(0.5), {ImageTransparency = 0}):Play()
+end)
