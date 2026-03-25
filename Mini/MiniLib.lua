@@ -149,7 +149,6 @@ function Library:NewWindow(title)
     ContentContainer.ScrollBarThickness = 3
     ContentContainer.ScrollBarImageColor3 = COLORS.Accent
     ContentContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-    ContentContainer.AutomaticCanvasSize = Enum.AutomaticSize.Y
     ContentContainer.Parent = MainFrame
 
     local ContentLayout = Instance.new("UIListLayout")
