@@ -399,7 +399,7 @@ local OrionLib = {
 				AutomaticSize = Enum.AutomaticSize.Y
 			}), {
 				MakeElement("Padding", 12, 12, 12, 12),
-				SetProps(MakeElement("Image", "rbxassetid://94811922392572"), {
+				SetProps(MakeElement("Image", GetLucideIcon(NotificationConfig.Image)), {
 					Size = UDim2.new(0, 20, 0, 20),
 					Position = UDim2.new(0, 0, 0.5, -9),
 					ImageColor3 = NotificationConfig.TextColor,
