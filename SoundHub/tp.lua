@@ -1,4 +1,4 @@
-local slide_tp_en
+    local slide_tp_en
 	local loop_tp_en
 
 	local last_house
@@ -35,7 +35,7 @@ local slide_tp_en
 	local l = loadstring(game:HttpGet("https://raw.githubusercontent.com/m1kp0/libraries/refs/heads/main/TheWorstUI.lua"))():CreateWindow({
     CanResize = "X",
     SizeX = 200,
-    Name = "TheWorst",
+    Name = "Sound",
     SizeY = 0,
     })
 
