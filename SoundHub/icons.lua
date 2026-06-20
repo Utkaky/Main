@@ -144,7 +144,7 @@ return {
 		["lucide-camera-off"] = "rbxassetid://10747822677",
 		["lucide-car"] = "rbxassetid://10709789810",
 		["lucide-carrot"] = "rbxassetid://10709789960",
-		["lucide-ruby2] = "rbxassetid://94805025051805",
+		["lucide-ruby2"] = "rbxassetid://94805025051805",
 		["lucide-cast"] = "rbxassetid://10709790097",
 		["lucide-charge"] = "rbxassetid://10709790202",
 		["lucide-check"] = "rbxassetid://10709790644",
