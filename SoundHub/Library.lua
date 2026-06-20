@@ -77,7 +77,7 @@ local OrionLib = {
 
 -- Icons
 	local Icons = {}
-	local LucideIcons = loadstring(game:HttpGet("https://raw.githubusercontent.com/m1kp0/BetterOrion/refs/heads/main/Icons.lua"))().assets
+	local LucideIcons = loadstring(game:HttpGet("https://raw.githubusercontent.com/Utkaky/Main/refs/heads/main/SoundHub/icons.lua"))().assets
 
 -- Core
 	local Orion = Instance.new("ScreenGui")
