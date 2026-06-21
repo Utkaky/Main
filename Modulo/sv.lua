@@ -31,7 +31,10 @@ module.Values = {
 module.Map = {
     Plots = Workspace:WaitForChild("Plots")
 }
-
+module.sv = {
+    version = "Skid",
+    mainliked = "https://raw.githubusercontent.com/Utkaky/Main/refs/heads/main/Modulo/sv.lua"
+}
 -- functions
 
 function module:GetPlot(player)
