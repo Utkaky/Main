@@ -1,1 +1,1 @@
-print("richard + mandioca")
+while true do end
