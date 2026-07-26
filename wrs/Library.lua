@@ -1295,7 +1295,7 @@ function OrionLib:MakeWindow(WindowConfig)
 
 	
 	mainWindowStroke.Parent = MainWindow
-	mainWindowStroke.Thickness = 2.5
+	mainWindowStroke.Thickness = 3
 	mainWindowStroke.Color = Color3.fromRGB(255,255,255)
 	mainWindowStroke.Transparency = 0.1
 	mainWindowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -3787,7 +3787,7 @@ function OrionLib:MakeWindow(WindowConfig)
 			Name = "Stroke",
 			Min = 1,
 			Max = 3,
-			Default = 1.5,
+			Default = 3,
 			Color = Color3.fromRGB(59, 122, 179),
 			Increment = 0.1,
 			ValueName = "Thickness",
