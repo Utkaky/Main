@@ -38,9 +38,17 @@ local OrionLib = {
 			Text = Color3.fromRGB(240, 240, 240),
 			TextDark = Color3.fromRGB(150, 150, 150)
 		},
+		Cataclysm = {
+			Main     = Color3.fromRGB(12, 8, 10),
+			Second   = Color3.fromRGB(25, 12, 15),
+			Stroke   = Color3.fromRGB(220, 40, 30),
+			Divider  = Color3.fromRGB(160, 25, 20),
+			Text     = Color3.fromRGB(255, 230, 220),
+			TextDark = Color3.fromRGB(200, 140, 130)
+		},
 	},
 	Toggles = {},
-	SelectedTheme = "Default",
+	SelectedTheme = "Cataclysm",
 	Folder = nil,
 	SaveCfg = false
 }
